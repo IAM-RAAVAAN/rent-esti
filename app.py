@@ -11,7 +11,7 @@ from geopy.distance import geodesic
 
 app = Flask(__name__)
 path = os.getcwd()
-model = pickle.load(open(f'{path}/finalized_model.pkl', 'rb'))
+model = pickle.load(open('finalized_model.pkl', 'rb'))
 
 g_keys = googlemaps.Client(key='AIzaSyDB4cH3TcqXvyp2zIjhzJD3OcJmZlr0mOg')
 
