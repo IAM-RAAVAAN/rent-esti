@@ -11,14 +11,15 @@ from geopy.distance import geodesic
 
 app = Flask(__name__)
 path = os.getcwd()
-model = pickle.load(open('finalized_model.pkl', 'rb'))
+model = pickle.load(
+    open(r'C:\Users\swaraj\Desktop\codes\rent-esti\finalized_model.pkl', 'rb'))
 
 g_keys = googlemaps.Client(key='AIzaSyDB4cH3TcqXvyp2zIjhzJD3OcJmZlr0mOg')
 
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('rent prediction.html')
+    return render_template('boot-strp.html')
 
 
 @app.route('/prediction', methods=['POST'])
@@ -46,15 +47,20 @@ def predict():
         df['dis'] = d
         df['bhk'] = bhk
         df['bath'] = bathrooms
-        prediction = model.predict(df)
+        prediction = model.predict(df)*0.85
+        
+        print(prediction)
         # [area,lat,longi,d,bhk,bathrooms]
         low = prediction-prediction/10
         high = prediction+prediction/10
-        range = 'The rang of the property is from {} to {}'.format(
-            low[0], high[0])
+        low1 = int(low[0]//100)
+        high1 = int(high[0]//100)
+        range = 'The lower range : {} \n higher range : {}'.format(
+            low1*100, high1*100)
         details = "the co-ordinates latitude {} and longitude {}".format(
             lat[0], longi[0])
-        return render_template('rent prediction.html', prediction_text=r"The estimated rent of the property is {}   ".format(prediction[0]), details=details, range=range)
+        prediction = prediction//100
+        return render_template('boot-strp.html', prediction_text=r"The estimated rent : {} thousand  ".format(int(prediction[0]*100)), details=details, range=range)
 
 
 if __name__ == '__main__':
