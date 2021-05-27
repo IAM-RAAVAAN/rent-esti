@@ -60,7 +60,7 @@ def predict():
         details = "the co-ordinates latitude {} and longitude {}".format(
             lat[0], longi[0])
         prediction = prediction//100
-        return render_template('boot-strp.html', prediction_text=r"The estimated rent : {} thousand  ".format(int(prediction[0]*100)), details=details, range=range)
+        return render_template('boot-strp.html', prediction_text=r"The estimated rent : {}   ".format(int(prediction[0]*100)), details=details, range=range)
 
 
 if __name__ == '__main__':
