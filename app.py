@@ -48,7 +48,7 @@ def predict():
         df['bhk'] = bhk
         df['bath'] = bathrooms
         prediction = model.predict(df)*0.85
-        
+
         print(prediction)
         # [area,lat,longi,d,bhk,bathrooms]
         low = prediction-prediction/10

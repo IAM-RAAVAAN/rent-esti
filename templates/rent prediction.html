@@ -1,7 +1,10 @@
-<!DOCTYPE html> 
-<head><title>Rent Prediction</title></head>
+<!DOCTYPE html>
+
+<head>
+    <title>Rent Prediction</title>
+</head>
 <style>
-    div{
+    div {
         width: 100%;
         text-align: center;
         background-color: #f7f6d2
@@ -10,56 +13,62 @@
 <h2 style="color: rebeccapurple;text-align: center;"> This is the rent prediction app</h2>
 
 
-<div  class="container" >
-  
-    <form  action="{{url_for('predict')}}"  method="post">
-        <h2 style="color:rgb(143, 146, 155);text-align:center;">Rent analysis  </h2>
-      
-        <label  for="fname">enter the area in sq. ft.</label>
-        <input type="text" type="integer" name='area' id='first' required="required" placeholder="1600"><small></small><br><br>
-        
-        
+<div class="container">
+
+    <form action="{{url_for('predict')}}" method="post">
+        <h2 style="color:rgb(143, 146, 155);text-align:center;">Rent analysis </h2>
+
+        <label for="fname">enter the area in sq. ft.</label>
+        <input type="text" type="integer" name='area' id='first' required="required"
+            placeholder="1600"><small></small><br><br>
+
+
         <label for="fname">bhk value</label>
-        <input style="color:blue;text-align:center;" type="integer" name='bhk' id='second'  required="required" placeholder="2 "><small></small><br><br>
-        
-        
-        
-          
+        <input style="color:blue;text-align:center;" type="integer" name='bhk' id='second' required="required"
+            placeholder="2 "><small></small><br><br>
+
+
+
+
         <label for="fname">bahthrooms</label>
-        <input  style="color:blue;" type="integer" name='bathrooms' id='third'   required="required" placeholder="1"><small></small><br><br>
-        
+        <input style="color:blue;" type="integer" name='bathrooms' id='third' required="required"
+            placeholder="1"><small></small><br><br>
+
         <label for="fname">locality</label>
-        <input  style="color:blue;" type="integer" name='locality' id='third'   required="required" placeholder="Shivaji Nagar , Pune"><small></small><br><br>
-        
-    
+        <input style="color:blue;" type="integer" name='locality' id='third' required="required"
+            placeholder="Shivaji Nagar , Pune"><small></small><br><br>
+
+
         <br><button id="sub" type="submit ">Calculate the Rent</button>
-    <br>
-            </form>
+        <br>
+    </form>
 
-    <br><br><h3>{{  prediction_text  }}<h3>
-        <h4>{{  details  }}</h4>
-        <h4>{{  range   }}</h4>
+    <br><br>
+    <h3>{{ prediction_text }}<h3>
+            <h4>{{ details }}</h4>
+            <h4>{{ range }}</h4>
 
-    </div>
-    <div  class="container" >
-  
-        <p> this rent estimator is deisgned to predict rent only and not sells prizes and out comes are accurate  in pune with respect to 99 accers </p>        
-    
-              
-        
-        </div>
-    
-    
-    
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    </body>
+</div>
+<div class="container">
+
+    <p> this rent estimator is deisgned to predict rent only and not sells prizes and out comes are accurate in pune
+        with respect to 99 accers </p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
