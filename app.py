@@ -5,21 +5,20 @@ import sklearn
 import pickle
 import numpy as np
 import pandas as pd
-import os
 
 from geopy.distance import geodesic
 
 app = Flask(__name__)
-path = os.getcwd()
-model = pickle.load(
-    open('finalized_model.pkl', 'rb'))
+filename = 'newmodel.pkl'
 
+
+model= pickle.load(open(filename,'rb'))
 g_keys = googlemaps.Client(key='AIzaSyDB4cH3TcqXvyp2zIjhzJD3OcJmZlr0mOg')
 
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('boot-strp.html')
+    return render_template('rent prediction.html')
 
 
 @app.route('/prediction', methods=['POST'])
@@ -29,6 +28,7 @@ def predict():
         bhk = int(request.form['bhk'])
         bathrooms = int(request.form['bathrooms'])
         locality = str(request.form['locality'])
+        value_add = int(request.form['Fuel_Type_Petrol'])
 
         geo_cod = g_keys.geocode(locality)
         lat = [geo_cod[0]['geometry']['location']['lat']]
@@ -37,30 +37,35 @@ def predict():
         pune = (18.531442, 73.844562)
         d = geodesic(latlong, pune).km
         area = int(area)
-        dic = {
-            'area': area,
-            'lati': lat
-        }
-        df = pd.DataFrame.from_dict(dic)
-
+        dic = [bhk]
+        df = pd.DataFrame(dic)
+        # df['bhk'] = bhk
+        df['bath_clean'] = bathrooms
+        df['lat'] = lat
         df['longi'] = longi
-        df['dis'] = d
-        df['bhk'] = bhk
-        df['bath'] = bathrooms
-        prediction = model.predict(df)*0.85
-
-        print(prediction)
+        df['distance_geo_py'] = d
+        print(df)
+        prediction1 = model.predict(df)
         # [area,lat,longi,d,bhk,bathrooms]
+        prediction = prediction1*area
+        x = prediction+value_add
+        prediction= (x[0]//100)*100
         low = prediction-prediction/10
+        low=(low//100)*100
         high = prediction+prediction/10
-        low1 = int(low[0]//100)
-        high1 = int(high[0]//100)
-        range = 'The lower range : {} \n higher range : {}'.format(
-            low1*100, high1*100)
-        details = "the co-ordinates latitude {} and longitude {}".format(
-            lat[0], longi[0])
-        prediction = prediction//100
-        return render_template('boot-strp.html', prediction_text=r"The estimated rent : {}   ".format(int(prediction[0]*100)), details=details, range=range)
+        high = (high//100)*100
+        lower = 'lowest {} '.format(
+            low)
+        higher='higher {}'.format(high)
+        details = " lat {} ".format(
+            lat[0])
+        longi = " longi {}".format(
+             longi[0])
+        rate = "the are {}".format(prediction1)
+        y=(prediction//100)*100
+        area='rate in this area is {}'.format(prediction1[0])
+
+        return render_template('rent prediction.html', prediction_text=r"The estimated rent of the property is  {} ".format(x[0]), details=details, lower=lower, higher=higher, longi=longi, rate=area)
 
 
 if __name__ == '__main__':
