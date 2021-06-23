@@ -45,7 +45,7 @@ def predict():
         df['longi'] = longi
         df['distance_geo_py'] = d
         print(df)
-        prediction1 = model.predict(df)
+        prediction1 = model.predict(df)*0.85
         # [area,lat,longi,d,bhk,bathrooms]
         prediction = prediction1*area
         x = prediction+value_add
